@@ -116,7 +116,7 @@ public class StiCo : AbstractAgent
         else
         {
             // Intern detection
-            if(relativePoint.x < 0)
+            if(relativePoint.x <= 0)
             {
                 if(_idStiCo)
                 {
@@ -147,11 +147,16 @@ public class StiCo : AbstractAgent
     void OnTriggerStay2D(Collider2D col)
     {
         if(col.gameObject.tag == "Marker")
-            if(col.gameObject.GetComponent<Marker>().GetId()!=id)
-                noCollisionTimer = 0.0f;
-        if(col.gameObject.tag == "Robot")
-            if(col.gameObject.GetComponent<StiCo>().GetId()!=id)
-                noCollisionTimer = 0.0f;
+        {
+            if(col.gameObject.GetComponent<Marker>().GetId()==id)
+                return;
+        }
+        else if(col.gameObject.tag == "Robot")
+        {
+            if(col.gameObject.GetComponent<StiCo>().GetId()==id)
+                return;
+        }
+        noCollisionTimer = 0.0f;
     }
 
     // When the robot leaves the collision area
