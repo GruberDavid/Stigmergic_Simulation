@@ -124,7 +124,7 @@ public class StiCoSquare : AbstractAgent
         else
         {
             // Intern detection
-            if(relativePoint.x < 0)
+            if(relativePoint.x <= 0)
             {
                 if(_idStiCo)
                 {
@@ -150,17 +150,22 @@ public class StiCoSquare : AbstractAgent
                 gameObject.transform.rotation *= rot;
             }
         }
+        lastCorner = gameObject.transform.position;
     }
 
     // While the robot is still colliding with something
     void OnTriggerStay2D(Collider2D col)
     {
         if(col.gameObject.tag == "Marker")
+        {
             if(col.gameObject.GetComponent<Marker>().GetId()==id)
                 return;
-        if(col.gameObject.tag == "Robot")
+        }
+        else if(col.gameObject.tag == "Robot")
+        {
             if(col.gameObject.GetComponent<StiCo>().GetId()==id)
                 return;
+        }
         noCollisionTimer = 0.0f;
     }
 
